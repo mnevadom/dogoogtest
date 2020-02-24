@@ -1,0 +1,28 @@
+#Spring properties
+spring:
+  aop:
+    auto: true
+  mvc:
+    async:
+      request-timeout: 300
+    date-format: 'dd/MM/yyyy'
+    dispatch-options-request: true
+    dispatch-trace-request: false
+  messages:
+    always-use-message-format: false
+    basename: messages
+    cache-duration: -1
+  couchbase:
+    bucket:
+      name: default
+# Security props..   
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          client-id: resource
+  banner:
+    location: classpath:bannerex/banner.txt
+    
+
+    
