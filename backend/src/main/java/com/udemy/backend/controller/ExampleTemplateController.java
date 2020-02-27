@@ -1,8 +1,7 @@
 package com.udemy.backend.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.udemy.backend.components.ExampleComponent;
 import com.udemy.backend.model.Person;
+import com.udemy.backend.services.ExampleService;
 
 @Controller
 @RequestMapping("/exampletemplate")
 public class ExampleTemplateController {
 	
 	public static final String EXAMPLE_TEMPLATE_VIEW = "exampletemplate";
+	
+	@Autowired
+	@Qualifier("exampleService")
+	private ExampleService exampleService;
+	
+	@Autowired
+	@Qualifier("exampleComponent")
+	private ExampleComponent exComponent;
+	
 
 	// primera forma de retornar plantilla
 	@GetMapping(value="/exampleString")
@@ -26,7 +36,10 @@ public class ExampleTemplateController {
 		model.addAttribute("name", "Jon");
 		model.addAttribute("person", new Person("Jon", 23));
 		
-		model.addAttribute("people", getPeople());
+		
+		exComponent.sayHello();
+		
+		model.addAttribute("people", exampleService.getListPeople());
 		
 		return EXAMPLE_TEMPLATE_VIEW;
 	}
@@ -38,17 +51,9 @@ public class ExampleTemplateController {
 		ModelAndView mav = new ModelAndView(EXAMPLE_TEMPLATE_VIEW);
 		mav.addObject("name", "Mike");
 		mav.addObject("person", new Person("Mike", 30));
-		mav.addObject("people", getPeople());
+		mav.addObject("people", exampleService.getListPeople());
 		
 		return mav;
 	}
 	
-	
-	private List<Person> getPeople(){
-		List<Person> people = new ArrayList<Person>();
-		people.add(new Person("Mario", 36));
-		people.add(new Person("Maria", 31));
-		
-		return people;
-	}
 }

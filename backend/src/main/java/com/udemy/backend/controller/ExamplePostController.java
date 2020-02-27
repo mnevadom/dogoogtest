@@ -1,7 +1,12 @@
 package com.udemy.backend.controller;
 
+import javax.validation.Valid;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +19,8 @@ import com.udemy.backend.model.Person;
 @Controller
 @RequestMapping("/examplepost")
 public class ExamplePostController {
+	
+	private static final Log LOGGER = LogFactory.getLog(ExamplePostController.class);
 	
 	private static final String SHOW_VIEW = "form";
 	private static final String RESULT_VIEW = "result";
@@ -33,6 +40,13 @@ public class ExamplePostController {
 
 	@GetMapping("/showform")
 	public String showForm(Model model) {
+		
+		LOGGER.info("INFO TRACE");
+		LOGGER.warn("WARNING TRACE");
+		LOGGER.error("ERROR TRACE");
+		LOGGER.debug("DEBUG TRACE");
+		
+		
 		model.addAttribute("person", new Person());
 		return SHOW_VIEW;
 	}
@@ -40,11 +54,22 @@ public class ExamplePostController {
 	@PostMapping("/addperson")
 	public ModelAndView addPerson(
 			// el nombre que tenga en el html que nos llama
-			@ModelAttribute("person") Person person
+			@Valid
+			@ModelAttribute("person") Person person, BindingResult bindingResult
 			) {
-		ModelAndView mav = new ModelAndView(RESULT_VIEW);
-		mav.addObject("personresult", person);
 		
+		ModelAndView mav = new ModelAndView();
+		
+		if (bindingResult.hasErrors()) {
+			mav.setViewName(SHOW_VIEW);
+		}else {
+			LOGGER.info("METHOD : 'addPerson' -- PARAMS: '" + person.toString() + "'");
+			
+			mav.setViewName(RESULT_VIEW);
+			mav.addObject("personresult", person);
+			
+			LOGGER.info("TEMPLATE: '" + RESULT_VIEW + "' -- DATA: '" + person + "'");
+		}
 		
 		return mav;
 	}

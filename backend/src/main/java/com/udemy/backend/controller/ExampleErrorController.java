@@ -19,6 +19,7 @@ public class ExampleErrorController {
 		int i = 6/0;
 		
 		// da igual lo que retorna porque no va a llegar
+		// esto se está capturando ademas desde el Controller de error creado
 		return new ModelAndView("500");
 	}
 }
