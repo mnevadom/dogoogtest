@@ -11,11 +11,11 @@ import com.udemy.backend.entity.Course;
 @Repository("courseJpaRepository")
 public interface CourseJpaRepository extends JpaRepository<Course, Serializable>{
 
-	public Course findByPrice(int price);
-	
-	public Course finByPriceAndName(int price, String name);
-	
-	public List<Course> findByNameOrderByHours(String name);
-	
-	public Course findByNameOrPrice(String name, int price);
+//	public Course findByPrice(int price);
+//	
+//	public Course finByPriceAndName(int price, String name);
+//	
+//	public List<Course> findByNameOrderByHours(String name);
+//	
+//	public Course findByNameOrPrice(String name, int price);
 }
