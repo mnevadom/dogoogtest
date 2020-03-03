@@ -20,18 +20,32 @@ import com.udemy.backend.constant.ViewConstant;
 import com.udemy.backend.model.ContactModel;
 import com.udemy.backend.service.ContactService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ContactController.
+ */
 @Controller
 @RequestMapping("/contacts")
 //@PreAuthorize("permitAll()")
 public class ContactController {
 	
+	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(ContactController.class);
+	
+	/** The contact service. */
 	@Autowired
 	@Qualifier("contactService")
 	private ContactService contactService;
 	
 	
 //	@PreAuthorize("permitAll()")
+/**
+ * Redirect contact form.
+ *
+ * @param model the model
+ * @param id the id
+ * @return the string
+ */
 //	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole...")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/contactform")
@@ -47,12 +61,24 @@ public class ContactController {
 		return ViewConstant.CONTACT_FORM;
 	}
 	
+	/**
+	 * Cancel.
+	 *
+	 * @return the string
+	 */
 	@GetMapping("/cancel")
 	public String cancel() {
 	
 		return ViewConstant.CONTACTS;
 	}
 	
+	/**
+	 * Adds the contact.
+	 *
+	 * @param contactModel the contact model
+	 * @param model the model
+	 * @return the string
+	 */
 	@PostMapping("/addcontact")
 	public String addContact(
 			@ModelAttribute(name= "contactModel") ContactModel contactModel, 
@@ -69,6 +95,11 @@ public class ContactController {
 		return "redirect:/contacts/showcontacts";
 	}
 	
+	/**
+	 * Show contacts.
+	 *
+	 * @return the model and view
+	 */
 	@GetMapping("/showcontacts")
 	public ModelAndView showContacts() {
 		ModelAndView mav = new ModelAndView(ViewConstant.CONTACTS);
@@ -80,6 +111,13 @@ public class ContactController {
 		return mav;
 	}
 	
+	/**
+	 * Removes the contact.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the model and view
+	 */
 	@GetMapping("/remove")
 	public ModelAndView removeContact(
 			@RequestParam(name="id", required = true) int id,

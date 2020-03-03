@@ -9,11 +9,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.udemy.backend.constant.ViewConstant;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginController.
+ */
 @Controller
 public class LoginController {
 	
+	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(LoginController.class);
 
+	/**
+	 * Login check.
+	 *
+	 * @return the string
+	 */
 	// este es agregando spring security (quito los dos metodos de abajo que ya no necesito (redirectToLogin, loginCheck y login)
 	@GetMapping({"/loginsuccess", "/"})
 	public String loginCheck() {
@@ -23,6 +33,14 @@ public class LoginController {
 		return "redirect:/contacts/showcontacts";
 	}
 	
+	/**
+	 * Show login form.
+	 *
+	 * @param mav the mav
+	 * @param error the error
+	 * @param logout the logout
+	 * @return the string
+	 */
 	@GetMapping("/login")
 	// tiene que obtener un modelandview. porque desde la vista login, reenvio a login
 	// y no se le está pasando el objeto de tipo userCredential que en teoría está gestionando la vista

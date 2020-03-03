@@ -18,13 +18,25 @@ import com.udemy.backend.entity.User;
 import com.udemy.backend.entity.UserRole;
 import com.udemy.backend.respositories.UserRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UserServiceImpl.
+ */
 @Service("userService")
 public class UserServiceImpl implements UserDetailsService{
 	
+	/** The user repository. */
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
 
+	/**
+	 * Load user by username.
+	 *
+	 * @param username the username
+	 * @return the user details
+	 * @throws UsernameNotFoundException the username not found exception
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
@@ -33,6 +45,13 @@ public class UserServiceImpl implements UserDetailsService{
 		return buildUser(user, authorities);
 	}
 
+	/**
+	 * Builds the user.
+	 *
+	 * @param user the user
+	 * @param authorities the authorities
+	 * @return the org.springframework.security.core.userdetails. user
+	 */
 	// spring secutity trabaja con estos objetos. Authorities seran en realidad mis roles de la entity
 	private org.springframework.security.core.userdetails.User buildUser(User user, List<GrantedAuthority> authorities){
 		
@@ -45,6 +64,12 @@ public class UserServiceImpl implements UserDetailsService{
 				buildAuthorities(user.getUserRoles()));
 	}
 	
+	/**
+	 * Builds the authorities.
+	 *
+	 * @param roles the roles
+	 * @return the list
+	 */
 	private List<GrantedAuthority> buildAuthorities(Set<UserRole> roles){
 		Set<GrantedAuthority> auths = new HashSet<GrantedAuthority>();
 		
